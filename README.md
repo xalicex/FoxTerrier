@@ -15,6 +15,13 @@ In order to work, FoxTerrier need a json file with all the information it needs 
 * "objects_type"          : The target objects can be **"GPO"**, **"OU"** ,**"User"**, **"Group"**,**"RDP"** (the values must be within a list). Example : ["GPO", "OU" ,"User"]. **Default value : ["GPO", "OU" ,"User", "Group","RDP"]**
 * "exclude_node"          : When using regex the results can be overwhelming. It's possible to exclude specific node from the query (the values must be within a list). Example : ["GENERIC-GROUP-11111111@MONDOMAIN.LOCAL","GENERIC-GROUP-22222222@MONDOMAIN.LOCAL"]
 
+Example of usage : 
+
+```
+python FoxTerrier.py
+```
+The template file muste be in the same folder and same level than FoxTerrier.py
+
 
 Example of synthesis : 
 
