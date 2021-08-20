@@ -1,10 +1,13 @@
 # FoxTerrier
 
-FoxTerrier is a cli version of the "OUTBOUND CONTROL RIGHTS" and "EXECUTION RIGHTS" (RDP only) BloodHound features but with csv reports.
+The main purpose of FoxTerrier is to identify, from predefine users or groups (hardcoded or in regex), all the interesting objects (GPO, OU, User, Group) that can be modified, and all the machine whom a user or a group can RDP to, and to output all these precious results in a beautiful csv.
 
-The purpose of FoxTerrier is to identify, from a predefine user or group (hardcoded or in regex), all the interesting objects (GPO, OU, User, Group) that can be modified, and all the machine whom a user or a group can RDP to, and to output all these precious results in a beautiful csv.
+FoxTerrier can be seen as a more flexible version without GUI of the "OUTBOUND CONTROL RIGHTS" and "EXECUTION RIGHTS" (RDP only) BloodHound features but with csv reports.
 
-FoxTerrier is also more faster than the Bloodhound interface to obtain the results (no graphic interface) and provide a synthesis of the results.
+But unlike the BloodHound OUTBOUND CONTROL RIGHTS feature that give you all the vulnerables objects available for a User/Group, FoxTerrier allows you to request only the type of object you want. 
+
+FoxTerrier is also faster than the Bloodhound interface to obtain the results (no graphic interface) and provide a synthesis of the results.
+
 
 In order to work, FoxTerrier need a json file with all the information it needs (cf template.json).
 
