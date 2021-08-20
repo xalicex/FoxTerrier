@@ -2,17 +2,17 @@
 
 The main purpose of FoxTerrier is to identify, from predefine users or groups (hardcoded or in regex), all the interesting objects (GPO, OU, User, Group) that can be modified, and all the machine whom a user or a group can RDP to, and to output all these precious results in a beautiful csv.
 
-FoxTerrier can be seen as a more flexible version without GUI of the "OUTBOUND CONTROL RIGHTS" and "EXECUTION RIGHTS" (RDP only) BloodHound features but with csv reports.
+FoxTerrier can be seen as a more flexible version without GUI of the "OUTBOUND CONTROL RIGHTS" and "EXECUTION RIGHTS" (RDP only) BloodHound features but with csv reports and a txt summary.
 
 But unlike the BloodHound OUTBOUND CONTROL RIGHTS feature that give you all the vulnerables objects available for a User/Group, FoxTerrier allows you to request only the type of object you want. 
 
-FoxTerrier is also faster than the Bloodhound interface to obtain the results (no graphic interface) and provide a synthesis of the results.
+FoxTerrier is also faster than the Bloodhound interface to obtain the results (no graphic interface).
 
 
 In order to work, FoxTerrier need a json file with all the information it needs (cf template.json).
 
 * "node_start_type"       : Mandatory. Must be **"User"** or **"Group"**. 
-* "node_start_name"       : Mandatory. Can be full or a regex (cf "is_node_start_regex")
+* "node_start_name"       : Mandatory. Can be full name or a regex (cf "is_node_start_regex"). Example "JOHN-DOE-825@MYDOMAIN.LOCAL" or "JOHN-DOE-\\d{3}@MYDOMAIN.LOCAL"
 * "is_node_start_regex"   : If regex is used in "node_start_name", the value must be **true** (be careful to use the value true and not the string "true"). **Default value : false**
 * "mode"                  : Relation between start node and object can be direct or indirect. You can set the mode of your choice by choising between the value **"direct"**, **"indirect"** or **"all"** ("all" is "direct"+"indirect"). **Default value : "direct"**
 * "objects_type"          : The target objects can be **"GPO"**, **"OU"** ,**"User"**, **"Group"**,**"RDP"** (the values must be within a list). Example : ["GPO", "OU" ,"User"]. **Default value : ["GPO", "OU" ,"User", "Group","RDP"]**
@@ -25,13 +25,44 @@ git clone https://github.com/xalicex/FoxTerrier
 pip install neo4j
 ```
 
-Example of usage (The template file must be in the same folder and same level than FoxTerrier.py) : 
+Example of template file (template.json) :
+
+⚠️The template file is used to create queries to the Neo4j database⚠️
+
+```
+{
+	"queries": [	
+		{
+      "node_start_type": "Group",
+      "node_start_name": "GENERIC-GROUP-\\d{8}.*@MYDOMAIN.LOCAL",
+			"is_node_start_regex": true,
+			"mode": "all",
+			"objects_type": ["GPO", "OU" ,"User", "Group","RDP"],
+			"exclude_node": ["GENERIC-GROUP-11111111@MYDOMAIN.LOCAL","GENERIC-GROUP-22222222@MYDOMAIN.LOCAL"]
+
+        },
+		{
+      "node_start_type": "User",
+      "node_start_name": "MY-AD-ACCOUNT@MYDOMAIN.LOCAL",
+			"is_node_start_regex": false,
+			"mode": "direct",
+			"objects_type": ["GPO"],
+     }		
+	]
+}
+```
+
+Example of usage (The template file must be in the same folder and at the same level as FoxTerrier.py) : 
+
+⚠️The Neo4j database must be up and running and already filled with the SharpHound data. Indeed, like the BloodHound GUI, FoxTerrier needs an accessible Neo4j database with the SharpHound data already imported. ⚠️
+
+
 
 ```
 python FoxTerrier.py
 ```
 
-Example of synthesis : 
+Example of summary txt file : 
 
 ```
 --- Load JSON File C:\Users\XXX\Documents\Tool\FoxTerrier\template.json
@@ -89,5 +120,5 @@ User : 1
 Group : 1
 CanRDP : 5990
 
---- Results available in My_Synthetic_Bloodhound_Report.csv ---
+--- Results available in My_Report.csv ---
 ```
