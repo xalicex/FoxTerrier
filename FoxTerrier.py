@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 from neo4j import GraphDatabase
@@ -140,10 +141,10 @@ class FoxTerrier:
 
                 query_exclude = " ".join([f"AND NOT m.name = '{i}'" for i in item['exclude_node']])
                 
-                query_dir = f"Match p=(m:{node_start_type})-[r]->(n:{obj_type}) WHERE m.name {symbol} '{node_start}' {query_exclude} and r.isacl=true return m.name AS start_name, n.name AS end_name"
-                query_indir = f"Match p=(m:{node_start_type})-[r1:MemberOf*1..]->(g2:Group)-[r2]->(n:{obj_type}) WHERE m.name {symbol} '{node_start}' {query_exclude} and r2.isacl=true return m.name AS start_name, n.name AS end_name"
-                query_dir_RDP = f"Match p=(m:{node_start_type})-[r:{obj_type}]->(n:Computer) WHERE m.name {symbol} '{node_start}' {query_exclude} return m.name AS start_name, n.name AS end_name"
-                query_indir_RDP = f"Match p=(m:{node_start_type})-[r1:MemberOf*1..]->(g2:Group)-[r2:{obj_type}]->(n:Computer) WHERE m.name {symbol} '{node_start}' {query_exclude} return m.name AS start_name, n.name AS end_name"
+                query_dir = f"Match p=(m:{node_start_type})-[r]->(n:{obj_type}) WHERE m.name {symbol} '{node_start}' {query_exclude} and r.isacl=true return m.name AS start_name, n.name AS end_name, n.distinguishedname AS end_distinguishedname"
+                query_indir = f"Match p=(m:{node_start_type})-[r1:MemberOf*1..]->(g2:Group)-[r2]->(n:{obj_type}) WHERE m.name {symbol} '{node_start}' {query_exclude} and r2.isacl=true return m.name AS start_name, n.name AS end_name, n.distinguishedname AS end_distinguishedname"
+                query_dir_RDP = f"Match p=(m:{node_start_type})-[r:{obj_type}]->(n:Computer) WHERE m.name {symbol} '{node_start}' {query_exclude} return m.name AS start_name, n.name AS end_name, n.distinguishedname AS end_distinguishedname"
+                query_indir_RDP = f"Match p=(m:{node_start_type})-[r1:MemberOf*1..]->(g2:Group)-[r2:{obj_type}]->(n:Computer) WHERE m.name {symbol} '{node_start}' {query_exclude} return m.name AS start_name, n.name AS end_name, n.distinguishedname AS end_distinguishedname"
                 
                 
                 #Prepare query for not "all" mode
@@ -201,6 +202,7 @@ class FoxTerrier:
                 for res in graph:   
                     line= [f"{res['start_name']}",
                            f"{res['end_name']}",
+                           f"{res['end_distinguishedname']}",
                            f"{object_type}"]
                     result.append(line)
                     
@@ -222,14 +224,16 @@ class FoxTerrier:
     def summary_results(self, results, synthesis_file):
         
         for elem in self.stats_per_node:
-            self.stats_per_node[elem] = sum([1 for s in results if elem == s[0] and s[2] != "CanRDP"])
+            self.stats_per_node[elem] = sum([1 for s in results if elem == s[0] and s[3] != "CanRDP"])
+        print(self.stats_per_node)
 
         for elem in self.stats_per_node_RDP:
-            self.stats_per_node_RDP[elem] = sum([1 for s in results if elem == s[0] and s[2] == "CanRDP"])
+            self.stats_per_node_RDP[elem] = sum([1 for s in results if elem == s[0] and s[3] == "CanRDP"])
+        print(self.stats_per_node_RDP)
             
         for elem in self.stats_per_objects:
-            self.stats_per_objects[elem] = sum(elem == s[2] for s in results)
-                
+            self.stats_per_objects[elem] = sum(elem == s[3] for s in results)
+        print(self.stats_per_objects)
         self.write_synthesis_file(synthesis_file, "--- Summary of vulnerable object per User or Group ---")
         self.write_synthesis_file(synthesis_file, "")
         
@@ -257,7 +261,7 @@ class FoxTerrier:
     def write_results(self,results, output_file, synthesis_file):
         
         with open(output_file, 'w', newline='') as f:
-            header = ['Start Object', 'Vulnerable Object', 'Type'] 
+            header = ['Start Object', 'Vulnerable Object','Distinguished Name Vulnerable Object', 'Type'] 
             write = csv.writer(f, delimiter=";")
             write.writerow(header)
             write.writerows(results)
