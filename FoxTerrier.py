@@ -309,7 +309,7 @@ if __name__ == "__main__":
     
     connexion_url = "bolt://localhost:7687"
     user = "neo4j"
-    password = "MySecurePassword"
+    password = os.environ.get('PASSWORD', 'MeinZecurePasswort')
     
     #Don't remove the r before the string in my_template_file variable!
     my_template_file = r"C:\Users\XXX\Documents\Tool\FoxTerrier\template.json"
