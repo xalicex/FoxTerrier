@@ -12,7 +12,7 @@ FoxTerrier is also faster than the Bloodhound interface to obtain the results (n
 In order to work, FoxTerrier need a json file with all the information it needs (cf template.json).
 
 * "node_start_type"       : Mandatory. Must be **"User"** or **"Group"**. 
-* "node_start_name"       : Mandatory. Can be full name or a regex (cf "is_node_start_regex"). Example "JOHN-DOE-825@MYDOMAIN.LOCAL" or "JOHN-DOE-\\d{3}@MYDOMAIN.LOCAL"
+* "node_start_name"       : Mandatory. Can be full name or a regex (cf "is_node_start_regex"). Example "JOHN-DOE-825@MYDOMAIN.LOCAL" or "JOHN-DOE-\\\d{3}@MYDOMAIN.LOCAL"
 * "is_node_start_regex"   : If regex is used in "node_start_name", the value must be **true** (be careful to use the value true and not the string "true"). **Default value : false**
 * "mode"                  : Relation between start node and object can be direct or indirect. You can set the mode of your choice by choising between the value **"direct"**, **"indirect"** or **"all"** ("all" is "direct"+"indirect"). **Default value : "direct"**
 * "objects_type"          : The target objects can be **"GPO"**, **"OU"** ,**"User"**, **"Group"**,**"RDP"** (the values must be within a list). Example : ["GPO", "OU" ,"User"]. **Default value : ["GPO", "OU" ,"User", "Group","RDP"]**
