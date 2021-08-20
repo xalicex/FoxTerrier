@@ -1,5 +1,5 @@
 # FoxTerrier
-<img align="right" height="260" src="https://i.ibb.co/28tzN1X/FT.jpg">
+<img align="right" height="260" src="https://i.ibb.co/VvZShyt/TF.png">
 
 The main purpose of FoxTerrier is to identify, from predefine users or groups (hardcoded or in regex), all the interesting objects (GPO, OU, User, Group) that can be modified, and all the machine whom a user or a group can RDP to, and to output all these precious results in a beautiful csv.
 
