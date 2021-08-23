@@ -1,10 +1,10 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 from neo4j import GraphDatabase
 import json
 import csv
 from os import path
+import configparser
 
 class FoxTerrier:
 
@@ -17,11 +17,6 @@ class FoxTerrier:
     def close(self):
         self.driver.close()
         
-    def is_file_exist(self, myfile):
-        if not path.exists(myfile):
-            return False
-        else:
-            return True
         
     def load_json(self,myfile, synthesis_file):
         items_list = []
@@ -275,19 +270,19 @@ class FoxTerrier:
 
         
     def generate(self, my_template_file, output_file, synthesis_file):
-        if not self.is_file_exist(my_template_file):
+        if not path.exists(my_template_file):
             print("")
             print(f"The template file {my_template_file} doesn't exist")
             print("")
             exit(1)
         
-        if self.is_file_exist(output_file):
+        if path.exists(output_file):
             print("")
             print(f"The output file {output_file} already exist")
             print("")
             exit(1)
         
-        if self.is_file_exist(synthesis_file):
+        if path.exists(synthesis_file):
             print("")
             print(f"The synthesis file {synthesis_file} already exist")
             print("")
@@ -308,13 +303,15 @@ class FoxTerrier:
 if __name__ == "__main__":
     
     connexion_url = "bolt://localhost:7687"
-    user = "neo4j"
-    password = "MySecurePassword"
+    config = configparser.RawConfigParser()
+    config.read('./conf.ini')
+    user = config['neo4j_credentials']['username']
+    password = config['neo4j_credentials']['password']
+
     
-    #Don't remove the r before the string in my_template_file variable!
-    my_template_file = r"C:\Users\XXX\Documents\Tool\FoxTerrier\template.json"
-    output_file = r"C:\Users\XXX\Documents\Tool\FoxTerrier\My__Report.csv"
-    synthesis_file = r"C:\Users\XXX\Documents\Tool\FoxTerrier\My_Synthesis.txt"
+    my_template_file = f"./{config['files']['template_file']}"
+    output_file = f"./{config['files']['csv_report']}"
+    synthesis_file = f"./{config['files']['txt_summary']}"
     
     blanqui = FoxTerrier(connexion_url, user, password)
     blanqui.generate(my_template_file, output_file, synthesis_file)
