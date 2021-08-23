@@ -57,7 +57,7 @@ Example of usage (The template file must be in the same folder and at the same l
 
 ⚠️The Neo4j database must be up and running and already filled with the SharpHound data. Indeed, like the BloodHound GUI, FoxTerrier needs an accessible Neo4j database with the SharpHound data already imported. ⚠️
 
-
+- Set up your neo4j creds in the **conf.ini file** then
 
 ```
 python FoxTerrier.py
