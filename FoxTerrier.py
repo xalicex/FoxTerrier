@@ -220,15 +220,12 @@ class FoxTerrier:
         
         for elem in self.stats_per_node:
             self.stats_per_node[elem] = sum([1 for s in results if elem == s[0] and s[3] != "CanRDP"])
-        print(self.stats_per_node)
 
         for elem in self.stats_per_node_RDP:
             self.stats_per_node_RDP[elem] = sum([1 for s in results if elem == s[0] and s[3] == "CanRDP"])
-        print(self.stats_per_node_RDP)
             
         for elem in self.stats_per_objects:
             self.stats_per_objects[elem] = sum(elem == s[3] for s in results)
-        print(self.stats_per_objects)
         self.write_synthesis_file(synthesis_file, "--- Summary of vulnerable object per User or Group ---")
         self.write_synthesis_file(synthesis_file, "")
         
