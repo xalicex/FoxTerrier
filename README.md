@@ -1,11 +1,13 @@
 # FoxTerrier
 <img align="right" height="260" src="https://i.ibb.co/VvZShyt/TF.png">
 
-FoxTerrier can be seen as a more flexible version without GUI of the "OUTBOUND CONTROL RIGHTS" and "EXECUTION RIGHTS" (RDP only) BloodHound features but with csv reports and a txt summary. ⚠️FoxTerrier uses the BloodHound data **already imported in the neo4j database**⚠️.
+FoxTerrier can be seen as a more flexible version without GUI of the `OUTBOUND CONTROL RIGHTS` and `EXECUTION RIGHTS (RDP only)` BloodHound features but with csv reports and a txt summary. 
+
+⚠️FoxTerrier uses the BloodHound data **already imported in the neo4j database**⚠️.
 
 The main purpose of FoxTerrier is to identify, from predefine users or groups (hardcoded or in regex), all the interesting objects (GPO, OU, User, Group) that can be modified, and all the machine whom a user or a group can RDP to, and to output all these precious results in a beautiful csv.
 
-But unlike the BloodHound OUTBOUND CONTROL RIGHTS feature that give you all the vulnerables objects available for a User/Group, FoxTerrier allows you to request only the type of object you want. 
+But unlike the BloodHound `OUTBOUND CONTROL RIGHTS` feature that give you all the vulnerables objects available for a User/Group, FoxTerrier allows you to request only the type of object you want. 
 
 FoxTerrier is also faster than the Bloodhound interface to obtain the results (no graphic interface).
 
