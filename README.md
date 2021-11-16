@@ -65,6 +65,13 @@ Example of usage (The template file must be in the same folder and at the same l
 python FoxTerrier.py
 ```
 
+A Win64 executable version is available in the release section in case python isn't installed on your machine. In this case : 
+
+```
+FoxTerrier.exe
+```
+
+
 Example of summary txt file : 
 
 ```
