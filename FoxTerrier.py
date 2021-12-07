@@ -299,11 +299,13 @@ class FoxTerrier:
     
 if __name__ == "__main__":
     
-    connexion_url = "bolt://localhost:7687"
     config = configparser.RawConfigParser()
     config.read('./conf.ini')
+    neo4jaddress = config['neo4j_credentials']['address']
+    neo4jport = config['neo4j_credentials']['port']
     user = config['neo4j_credentials']['username']
     password = config['neo4j_credentials']['password']
+    connexion_url = f"bolt://{neo4jaddress}:{neo4jport}"
 
     
     my_template_file = f"./{config['files']['template_file']}"
