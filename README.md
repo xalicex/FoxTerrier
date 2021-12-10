@@ -1,3 +1,9 @@
+Presentation of FoxTerrier on [this article](https://assurancemaladiesec.github.io/foxterrier-on-the-trail/). 
+
+Official repo is now : https://github.com/AssuranceMaladieSec/FoxTerrier
+
+However, this repo **will be maintain**.
+
 # Installation
 
 ```
